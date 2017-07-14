@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Rating</title>
+    <style media="screen">
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            list-style: none;
+            display: inline-block;
+        }
+        .rating {
+            width: 550px;
+            height: 100px;
+            margin: 100px auto;
+        }
+        .rating-item {
+            width: 100px;
+            height: 100px;
+            background: url(img/star.png) no-repeat;
+            cursor: pointer;
+        }
+        .active {
+            background: url(img/full-star.png) no-repeat;
+        }
+    </style>
+  </head>
+  <body>
+      <ul class="rating" id="rating">
+          <li class="rating-item" title="Very Bad"></li>
+          <li class="rating-item" title="Bad"></li>
+          <li class="rating-item" title="Fair"></li>
+          <li class="rating-item" title="Good"></li>
+          <li class="rating-item" title="Awesome"></li>
+      </ul>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script type="text/javascript">
+          //init light stars number
+          var num = 0,
+              $rating = $('#rating');
+              $star = $rating.find('.rating-item');
+
+          //light on
+          var lightOn = function(num) {
+              $star.each(function(i){
+                  if(i < num) {
+                      $(this).addClass('active');
+                  }else{
+                      $(this).removeClass('active');
+                  }
+              });
+          };
+
+          //init
+          lightOn(num);
+
+          //user event
+          $star.on('mouseover', function(){
+              lightOn($(this).index() + 1);
+          });
+          $star.on('click', function(){
+              num = $(this).index() + 1;
+          });
+          $rating.on('mouseout', function(){
+              lightOn(num);
+          });
+
+
+
+
+      </script>
+  </body>
+</html>
