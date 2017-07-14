@@ -39,39 +39,40 @@
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script type="text/javascript">
-          //init light stars number
-          var num = 0,
-              $rating = $('#rating');
-              $star = $rating.find('.rating-item');
 
-          //light on
-          var lightOn = function(num) {
-              $star.each(function(i){
-                  if(i < num) {
-                      $(this).addClass('active');
-                  }else{
-                      $(this).removeClass('active');
-                  }
-              });
-          };
+          (function(){
+              //init light stars number
+              var num = 0,
+                  $rating = $('#rating');
+                  $star = $rating.find('.rating-item');
 
-          //init
-          lightOn(num);
+              //light on
+              var lightOn = function(num) {
+                  $star.each(function(i){
+                      if(i < num) {
+                          $(this).addClass('active');
+                      }else{
+                          $(this).removeClass('active');
+                      }
+                  });
+              };
 
-          //user event
-          $star.on('mouseover', function(){
-              lightOn($(this).index() + 1);
-          });
-          $star.on('click', function(){
-              num = $(this).index() + 1;
-          });
-          $rating.on('mouseout', function(){
+              //init
               lightOn(num);
-          });
 
+              //user event
+              $star.on('mouseover', function(){
+                  lightOn($(this).index() + 1);
+              });
+              $star.on('click', function(){
+                  num = $(this).index() + 1;
+              });
+              $rating.on('mouseout', function(){
+                  lightOn(num);
+              });
 
-
-
+          })();
+          
       </script>
   </body>
 </html>
