@@ -37,17 +37,21 @@
           <li class="rating-item" title="Awesome"></li>
       </ul>
 
+      <ul class="rating" id="rating2">
+          <li class="rating-item" title="Very Bad"></li>
+          <li class="rating-item" title="Bad"></li>
+          <li class="rating-item" title="Fair"></li>
+          <li class="rating-item" title="Good"></li>
+          <li class="rating-item" title="Awesome"></li>
+      </ul>
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script type="text/javascript">
 
-          (function(){
-              //init light stars number
-              var num = 0,
-                  $rating = $('#rating');
-                  $star = $rating.find('.rating-item');
+          var rating = (function(){
 
-              //light on
-              var lightOn = function(num) {
+              //light on, init only once
+              var lightOn = function($star, num) {
                   $star.each(function(i){
                       if(i < num) {
                           $(this).addClass('active');
@@ -57,22 +61,36 @@
                   });
               };
 
-              //init
-              lightOn(num);
+              var init = function(el, num) { // passing different parameters
+                  //init light stars number
+                  var $rating = $(el),
+                      $star = $rating.find('.rating-item');
 
-              //user event
-              //event delegation
-              $rating.on('mouseover', '.rating-item', function(){
-                  lightOn($(this).index() + 1);
-              });
-              $rating.on('click', '.rating-item', function(){
-                  num = $(this).index() + 1;
-              });
-              $rating.on('mouseout', function(){
-                  lightOn(num);
-              });
+                  //init
+                  lightOn($star, num);
+
+                  //user event
+                  //event delegation
+                  $rating.on('mouseover', '.rating-item', function(){
+                      lightOn($star, $(this).index() + 1);
+                  });
+                  $rating.on('click', '.rating-item', function(){
+                      num = $(this).index() + 1;
+                  });
+                  $rating.on('mouseout', function(){
+                      lightOn($star, num);
+                  });
+              };
+
+              return {
+                  init: init
+              };
 
           })();
+
+          //Duplicated cases
+          rating.init('#rating', 0);
+          rating.init('#rating2', 2);
 
       </script>
   </body>
